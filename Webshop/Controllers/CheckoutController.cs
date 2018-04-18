@@ -29,6 +29,12 @@ namespace Webshop.Controllers
 
         public ActionResult Index()
         {
+
+            if (!this.Request.Cookies.ContainsKey("CartId"))
+            {
+                return RedirectToAction("Index", "Products");
+            }
+
             var cartId = GetOrCreateCartId();
 
             var cartItems = this.checkoutService.GetCart(cartId);
