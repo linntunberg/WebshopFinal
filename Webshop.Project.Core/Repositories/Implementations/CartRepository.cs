@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Dapper;
 using MySql.Data.MySqlClient;
@@ -6,7 +7,7 @@ using Webshop.Project.Core.Models;
 
 namespace Webshop.Project.Core.Repositories.Implementations
 {
-    public class CartRepository
+    public class CartRepository : ICartRepository
     {
         private readonly string connectionString;
 
@@ -24,12 +25,21 @@ namespace Webshop.Project.Core.Repositories.Implementations
             }
         }
 
-        public void InsertCart(int id, string cartId, int quantity)
+        public bool InsertCart(int id, string cartId, int quantity)
         {
-            using (var connection = new MySqlConnection(this.connectionString))
+            try
             {
-                   connection.Execute("INSERT INTO Carts (productId, cartId, quantity) VALUES(@id, @cartId, @quantity)", new { id, cartId, quantity });
+
+                using (var connection = new MySqlConnection(this.connectionString))
+                {
+                    connection.Execute("INSERT INTO Carts (productId, cartId, quantity) VALUES(@id, @cartId, @quantity)", new { id, cartId, quantity });
+                    return true;
                 }
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
         } 
     }
 }
