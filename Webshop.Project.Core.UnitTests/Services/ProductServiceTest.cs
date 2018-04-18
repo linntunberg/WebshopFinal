@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Webshop.Project.Core.Models;
-using Webshop.Project.Core.Repositories.Implementations;
 using Webshop.Project.Core.Services.Implementations;
 using FakeItEasy;
 using NUnit.Framework;
